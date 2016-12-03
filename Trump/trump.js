@@ -1,192 +1,89 @@
-(function(){	
-	var wall = new Audio('sound/wall.mp3');
-	var sitdown = new Audio('sound/sitDown.mp3');
-	var comebaby = new Audio('sound/comebaby.mp3');
-	var latinos = new Audio('sound/latinos.mp3');
-	var thatseasy = new Audio('sound/thatseasy.mp3');
-	
-	var slap1 = new Audio('sound/slap1.mp3');
-	var slap2 = new Audio('sound/slap2.mp3');
-	var slap3 = new Audio('sound/slap3.mp3');
-	var slaps = [
-		slap1, slap2 /* ,slap3*/
-	];
-	var sounds = [
-		wall, sitdown, comebaby, latinos, thatseasy
-	];
-	var randomindex;
-	
-	
-	var counter = 0;
+(() => {
+  const wall = new Audio('sound/wall.mp3')
+  const sitdown = new Audio('sound/sitDown.mp3')
+  const comebaby = new Audio('sound/comebaby.mp3')
+  const latinos = new Audio('sound/latinos.mp3')
+  const thatseasy = new Audio('sound/thatseasy.mp3')
 
-	window.addEventListener("keydown", function(event){
-		var canSlap = true;
-		
-		if(event.defaultPrevented){
-			return;
-		}
-		
-			switch (event.keyCode){
-				case(39):
-				 randomindex = Math.floor(Math.random() * 5);
-				 randomslap = Math.floor(Math.random() * 2); /*3*/
-				
-				//play right slap
-				rightSlap();
-				setTimeout(function(){
-					 slaps[randomslap].play();
-					document.getElementById("trump").setAttribute("src", "trump_right.png");
-					sounds[randomindex].play();
-					setTimeout(function(){
-						document.getElementById("trump").setAttribute("src", "trump.png");
-					}, 600);
-				
-					
-					
-					
-				}, 200);
-				
-				counter++;
-				if(counter == 15){
-					//redirect
-					//window.location.href = "http://www.berniesanders.com";
-					alert("Looks like your slap happy")
-					window.location.reload();
-				}
-				break;
-				
-				case(37):
-				randomslap = Math.floor(Math.random() * 3);
-				 randomindex= Math.floor(Math.random()*5);
-				leftSlap();
-				
-				setTimeout(function(){
-					 slaps[randomslap].play();
-					//play left slap
-				document.getElementById("trump").setAttribute("src", "trump_left.png");
-				sounds[randomindex].play();
-				setTimeout(function(){
-					document.getElementById("trump").setAttribute("src", "trump.png");
-					
-				}, 600);
-				
-					
-					
-				}, 200);
-				counter++
-				
-				
-				if(counter == 15){
-					//redirect
-					//window.location.href = "http://www.berniesanders.com";
-					alert("Looks like your slap happy")
-					window.location.reload();
-					
-				}
-				break;
-			
-				default:
-				return;
-			}
-	
-		event.preventDefault();
-	}, true);
-	
-	
-	var leftSlap = function(){
-		
-		document.getElementById("meat").setAttribute("src","StripSteak.png");
-		var start = null;
-		
-		// Get the image Element
-		var element = document.getElementById("meat");
-		element.style.display = "block";
-		element.style.position = 'absolute';
-		element.style.marginLeft = window.innerWidth - 200 + "px";
-		//element.style.right = window.innerWidth*.3+"px";
-		console.log("left: " + element.style.left + " \n right: " + element.style.right);
-		function step(timestamp) {
-		  // Init start the first time in step()
-		  if (!start) start = timestamp;
-		  
-		  // Calculate a time value representing progress
-		  var t = (timestamp - start)/1000;
-		  
-		  // Set position of image using t
-		  
-		  element.style.left = -(4000*(t)) + "px";
-		  element.style.top  = 50*Math.cos(5*t) + "px";
-		  
-		  // Schedule another update prior to next refresh
-		  window.requestAnimationFrame(step);
-		}
-		
-		// Kick off the animation
-		window.requestAnimationFrame(step);	
-		setTimeout(function(){
-			step = function(){};
-		}, 1200);
-		
-		element.style.left = window.innerWidth/2 + "px";
-	};
-	
-	var rightSlap = function(){
-		
-		document.getElementById("meat").setAttribute("src","StripSteak_flipped.png");
-		
-		var start = null;
-		
-		// Get the image Element
-		var element = document.getElementById("meat");
-		element.style.marginLeft = 0;
-		element.style.display = "block";
-		element.style.position = 'absolute';
-		
-		element.style.left = window.innerWidth*.3 + "px";
-			console.log("left: " + element.style.left + " \n right: " + element.style.right);
-		
+  const slap1 = new Audio('sound/slap1.mp3')
+  const slap2 = new Audio('sound/slap2.mp3')
+  const slaps = [
+    slap1, slap2
+  ]
 
-		function step2(timestamp) {
-		  // Init start the first time in step()
-		  if (!start) start = timestamp;
-		  
-		  // Calculate a time value representing progress
-		  var t = (timestamp - start)/1000;
-		  
-		  // Set position of image using t
-		  
-		  element.style.left = 4000*(t) + "px";
-		  element.style.top  = 50*Math.cos(5*t) + "px";
-		
-		  // Schedule another update prior to next refresh
-		  window.requestAnimationFrame(step2);
-		}
-		
-		
-				
-		
-	
-		
-		
-		// Kick off the animation
-		window.requestAnimationFrame(step2);	
-		setTimeout(function(){
-			step2 = function(){};
-		}, 1000);
-		
-		element.style.left = window.innerWidth/2 + "px";
-		
-	}
+  const sounds = [
+    wall, sitdown, comebaby, latinos, thatseasy
+  ]
 
+  let randomindex
 
-	function trumpRight(){
-		
-		document.getElementById("trump").setAttribute("src", "trump_right.png");
-					sounds[randomindex].play();
-					setTimeout(function(){
-						document.getElementById("trump").setAttribute("src", "trump.png");
-					}, 600);
-		
-	}
+  window.addEventListener('keydown', event => {
 
-})();
+    if (event.defaultPrevented) {
+      return
+    }
+
+    randomindex = Math.floor(Math.random() * 5)
+    randomslap = Math.floor(Math.random() * 2)
+
+    switch (event.keyCode) {
+      case(39):
+      slap('StripSteak.png', 'right')
+      animate('trump_right.png')
+      break
+
+      case(37):
+      slap('StripSteak_flipped.png', 'left')
+      animate('trump_left.png')
+      break
+
+      default:
+      return
+    }
+    event.preventDefault()
+  }, true)
+
+  const animate = image => {
+    setTimeout(() => {
+      slaps[randomslap].play()
+      document.getElementById('trump').setAttribute('src', image)
+      sounds[randomindex].play()
+      setTimeout(() => {
+        document.getElementById('trump').setAttribute('src', 'trump.png')
+      }, 600)
+    }, 200)
+  }
+
+  const slap = (meatImage, direction) => {
+    document.getElementById('meat').setAttribute('src',meatImage)
+    let start = null
+    let meatElement = document.getElementById('meat')
+    meatElement.style.display = 'block'
+    meatElement.style.position = 'absolute'
+    let multiplier
+    direction === 'left' ? multiplier = -1 : multiplier = 1
+    if (direction === 'left') {
+      meatElement.style.marginLeft = window.innerWidth - 200 + 'px'
+    } else {
+      meatElement.style.marginLeft = 0
+      meatElement.style.left = window.innerWidth * .3 + 'px'
+    }
+    let step = timestamp => {
+      if (!start) start = timestamp
+      let t = (timestamp - start) / 1000
+      if (direction === 'left') {
+        meatElement.style.left = multiplier * (4000 * t) + 'px'
+      } else {
+        meatElement.style.left = multiplier * (4000 * t) + 'px'
+      }
+      meatElement.style.top = 50 * Math.cos(5 * t) + 'px'
+      window.requestAnimationFrame(step)
+    }
+    window.requestAnimationFrame(step)
+    setTimeout(() => {
+      step = () => {}
+    }, 1200)
+
+    meatElement.style.left = window.innerWidth / 2 + 'px'
+  }
+})()
